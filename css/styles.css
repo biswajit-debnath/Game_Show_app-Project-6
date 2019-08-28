@@ -13,7 +13,7 @@
   --color-keys-light: #E5E5E5;
   --font-size-large: 60px;
   --font-size-medium: 20px;
-  --transition: all .2s ease-in-out;
+  --transition: all .3s ease-in-out;
 }
 
 /* main */
@@ -140,6 +140,7 @@ button {
 
 .start {
   background-color: var(--color-start);
+  transition: var(--transition);
 }
 
 .start a {
