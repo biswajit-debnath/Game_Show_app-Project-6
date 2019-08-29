@@ -1,48 +1,44 @@
 let key_pad = document.querySelector('#qwerty');
-let ul = document.querySelector('#phrase ul');
+let phrase = document.querySelector('#phrase');
+let ul = phrase.querySelector('ul');
 const strt_div = document.querySelector(".start");
-let missed = 0;
-
-//Setting the start button
-strt_div.addEventListener('click', (ev)=> {
-    if(ev.target.tagName === 'A' && ev.target.textContent === 'Start Game')
-        strt_div.style.opacity = 0;
-    if(ev.target.tagName === 'A' && ev.target.textContent === 'Reset Game'){
-        missed = 0;
-        let button_nos = key_pad.querySelectorAll('button');
-        for(let i=0;i<button_nos.length;i++)
-            button_nos[i].className = '';
-        let letter_nos = ul.querySelectorAll('.letter');
-        for(let i=0;i<letter_nos.length;i++)
-            letter_nos[i].className = 'letter';
-        life= 4
-        let lives_nos = document.querySelectorAll('.tries')
-        for(let i=0;i<lives_nos.length;i++)
-            lives_nos[i].querySelector('img').src ="images/liveHeart.png";
-        }
-        setTimeout(()=>{
-            strt_div.style.display = 'none';
-        },300);
-});
-
 let phrases = [
     'Shot In the Dark',
     'On the Same Page',
     'Break The Ice',
-    'Fight Fire With Fire',
-    'Needle In a Haystack'
+    'My Cup of Tea',
+    'Man of Few Words'
 ];
 
-let rand = 2;
+let missed = 0;
+let life= 4;
+let rand;
 
+function reset_game(){
+    missed = 0;
+    let button_nos = key_pad.querySelectorAll('button');
+    for(let i=0;i<button_nos.length;i++)
+        button_nos[i].className = '';
+    let letter_nos = ul.querySelectorAll('li');
+    for(let i=0;i<letter_nos.length;i++)
+        ul.removeChild(letter_nos[i]);
+}
 
+function reset_life(){
+    life= 4
+    let lives_nos = document.querySelectorAll('.tries')
+    for(let i=0;i<lives_nos.length;i++)
+        lives_nos[i].querySelector('img').src ="images/liveHeart.png";
+}
 
 function getRandomPhraseAsArray(arr){
+    rand =Math.floor(Math.random()*arr.length);
     let new_arr=[];
     for(let i=0;i<arr[rand].length;i++)
         new_arr.push(arr[rand][i]);
     return new_arr;
 }
+
 function addPhraseToDisplay(arr) {
     for(let i=0;i<arr.length;i++){
         let li = document.createElement('li');
@@ -55,8 +51,6 @@ function addPhraseToDisplay(arr) {
         ul.appendChild(li); 
     } 
 }
-const current_phrase = getRandomPhraseAsArray(phrases);
-addPhraseToDisplay(current_phrase);
 
 function checkLetter(pressed_key){
     let guess = null;
@@ -68,6 +62,7 @@ function checkLetter(pressed_key){
     }  
     return guess;
 }
+
 function checkWin() {
     let show_nos = document.querySelectorAll('.show');
     let letter_nos = document.querySelectorAll('.letter');
@@ -87,23 +82,51 @@ function checkWin() {
     }
         
 }
+function setting_phrase(){
+    //Getting a random phrase and displaying the character
+    current_phrase = getRandomPhraseAsArray(phrases);
+    addPhraseToDisplay(current_phrase);
+    //converting the selected phrase letters to lower case
+    for(let i=0; i<current_phrase.length;i++)
+        current_phrase[i] = current_phrase[i].toLowerCase(); 
+}
 
-//lower case
-for(let i=0; i<current_phrase.length;i++)
-    current_phrase[i] = current_phrase[i].toLowerCase(); 
+
+
+//Setting the start button and reset button
+strt_div.addEventListener('click', (ev)=> {
+    if(ev.target.tagName === 'A' && ev.target.textContent === 'Start Game'){
+        strt_div.style.opacity = 0;
+        setting_phrase();
+    }
+    //Reset button
+    if(ev.target.tagName === 'A' && ev.target.textContent === 'Reset Game'){ 
+        reset_game();
+        reset_life();
+        setting_phrase();
+        }
+        setTimeout(()=>{
+            strt_div.style.display = 'none';
+        },300);
+});
+
+
 //setting the class to matched and unmatched character
-let life= 4;
 key_pad.addEventListener('click', (ev)=> {
     if(ev.target.tagName === 'BUTTON'){
         ev.target.className = 'chosen';
         const key = ev.target.textContent;
-        let letterFound = checkLetter(key); 
+        let letterFound = checkLetter(key);
+        //When selected character is not matching  
         if(letterFound === null){
             missed++;
             let lives = document.querySelectorAll('.tries')[life];
             lives.querySelector('img').src ="images/lostHeart.png";
             life--;
+            ev.target.className = 'wrong_chosen';
         }
+        else
+            ev.target.className = 'chosen';
         checkWin(); 
     }   
 });
