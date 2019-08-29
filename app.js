@@ -95,19 +95,21 @@ function setting_phrase(){
 
 //Setting the start button and reset button
 strt_div.addEventListener('click', (ev)=> {
-    if(ev.target.tagName === 'A' && ev.target.textContent === 'Start Game'){
-        strt_div.style.opacity = 0;
-        setting_phrase();
-    }
-    //Reset button
-    if(ev.target.tagName === 'A' && ev.target.textContent === 'Reset Game'){ 
-        reset_game();
-        reset_life();
-        setting_phrase();
+    if(ev.target.tagName === 'A'){
+        if(ev.target.textContent === 'Start Game'){
+            strt_div.style.opacity = 0;
+            setting_phrase();
         }
+        //Reset button
+        if(ev.target.textContent === 'Reset Game'){ 
+            reset_game();
+            reset_life();
+            setting_phrase();
+            }
         setTimeout(()=>{
             strt_div.style.display = 'none';
         },300);
+    }
 });
 
 

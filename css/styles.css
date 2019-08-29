@@ -14,6 +14,18 @@
   --font-size-large: 60px;
   --font-size-medium: 20px;
   --transition: all .3s ease-in-out;
+  --text-3d: 0 1px 0 #ccc,
+  0 2px 0 #c9c9c9,
+  0 3px 0 #bbb,
+  0 4px 0 #b9b9b9,
+  0 5px 0 #aaa,
+  0 6px 1px rgba(0,0,0,.1),
+  0 0 5px rgba(0,0,0,.1),
+  0 1px 3px rgba(0,0,0,.3),
+  0 3px 5px rgba(0,0,0,.2),
+  0 5px 10px rgba(0,0,0,.25),
+  0 10px 10px rgba(0,0,0,.2),
+  0 20px 20px rgba(0,0,0,.15);
 }
 
 /* main */
@@ -27,15 +39,17 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
+  background:url("../images/temple.jpg") no-repeat center/cover; 
 }
 
 li, ol, ul {
   padding: 0;
   display: inline-block;
- 
+  
 }
 li {
   margin-top:7px; 
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 h2 {
@@ -52,7 +66,7 @@ button {
   padding: .5rem 1rem;
   color: var(--color-keys);
   font-size: var(--font-size-medium);
-  background-color: var(--color-keys-light);
+  background-color: rgba(190, 243, 243, 0.815);
   border-radius: 5px;
   -webkit-transition: var(--transition);
   -o-transition: var(--transition);
@@ -76,20 +90,23 @@ button {
 /* Title */
 
 .header {
-  color: var(--color-start);
+  color: white;
+  text-shadow: var(--text-3d);
+
 }
 
 /* Phrase */
 
 .letter {
-  font-size: var(--font-size-medium);
+  font-size: 30px;
   height: 65px;
   width: 65px;
-  padding: 20px 1px 0 1px;
-  margin-right: 2px;
+  padding: 10px 1px 0 1px;
+  margin-right: 6px;
   color: transparent;
   background: var(--color-neutral-light);
   border-radius: 5px;
+
 }
 
 .space {
@@ -101,7 +118,7 @@ button {
   background-color: #76CE82;
   transition: background-color .3s ease-in-out,transform .6s ease-in-out;
   transform: rotate(360deg);
-  
+  text-shadow: var(--text-3d);
 }
 
 /* Keyboard */
@@ -122,16 +139,17 @@ button {
   border-radius: 5px;
   font-size: var(--font-size-medium);
   color: #FFFFFF;
-  transition: transform .6s ease-in-out;
-  transform: rotate(360deg);
+  transition: transform .4s ease-in-out;
+  transform: rotate(-360deg);
 } 
 
 .btn__reset {
   padding: 8px;
   margin: 50px auto;
-  background: #FFFFFF;
+  background: lightgray;
   border-radius: 5px;
   font-size: var(--font-size-medium);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* Overlay */
@@ -155,26 +173,32 @@ button {
 }
 
 .start {
-  background-color: var(--color-start);
+  background:var(--color-start) url("../images/hexagone.jpg") no-repeat center/cover; 
   transition: var(--transition);
 }
-
+.start h2 {
+  text-shadow: var(--text-3d);
+}
 .start a {
-  color: var(--color-win);
+  color: black;
+  text-shadow: var(--text-3d);
 }
 
 .win {
-  background-color: var(--color-win);
+  background: var(--color-win) url("../images/win2.png") no-repeat center/cover;;
 }
 
 .win a {
-  color: var(--color-win);
+  color: black;
+  text-shadow: var(--text-3d);
 }
 
 .lose {
-  background-color: var(--color-lose);
+  background: var(--color-lose) url("../images/lose1.png") no-repeat center/cover;;
 }
 
 .lose a {
-  color: var(--color-lose);
+  color: black;
+  text-shadow: var(--text-3d);
 }
+
