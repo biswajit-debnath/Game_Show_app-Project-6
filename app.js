@@ -5,9 +5,9 @@ let missed = 0;
 
 //Setting the start button
 strt_div.addEventListener('click', (ev)=> {
-    if(ev.target.tagName == 'A' && ev.target.textContent === 'Start Game')
+    if(ev.target.tagName === 'A' && ev.target.textContent === 'Start Game')
         strt_div.style.opacity = 0;
-    if(ev.target.tagName == 'A' && ev.target.textContent === 'Reset Game'){
+    if(ev.target.tagName === 'A' && ev.target.textContent === 'Reset Game'){
         missed = 0;
         let button_nos = key_pad.querySelectorAll('button');
         for(let i=0;i<button_nos.length;i++)
@@ -15,6 +15,10 @@ strt_div.addEventListener('click', (ev)=> {
         let letter_nos = ul.querySelectorAll('.letter');
         for(let i=0;i<letter_nos.length;i++)
             letter_nos[i].className = 'letter';
+        life= 4
+        let lives_nos = document.querySelectorAll('.tries')
+        for(let i=0;i<lives_nos.length;i++)
+            lives_nos[i].querySelector('img').src ="images/liveHeart.png";
         }
         setTimeout(()=>{
             strt_div.style.display = 'none';
@@ -29,7 +33,7 @@ let phrases = [
     'Needle In a Haystack'
 ];
 
-let rand = 0;
+let rand = 2;
 
 
 
@@ -70,14 +74,14 @@ function checkWin() {
     if(missed === 5){
         strt_div.style.opacity = 1;
         strt_div.style.display = '';
-        strt_div.className += ' lose';
+        strt_div.className = 'start lose';
         strt_div.querySelector('.title').textContent ='Game Over';
         strt_div.querySelector('.btn__reset').textContent ='Reset Game';
     }
     else if(show_nos.length === letter_nos.length){
         strt_div.style.opacity = 1;
         strt_div.style.display = '';
-        strt_div.className += ' win';
+        strt_div.className = 'start win';
         strt_div.querySelector('.title').textContent ='You Win';
         strt_div.querySelector('.btn__reset').textContent ='Reset Game';
     }
@@ -88,6 +92,7 @@ function checkWin() {
 for(let i=0; i<current_phrase.length;i++)
     current_phrase[i] = current_phrase[i].toLowerCase(); 
 //setting the class to matched and unmatched character
+let life= 4;
 key_pad.addEventListener('click', (ev)=> {
     if(ev.target.tagName === 'BUTTON'){
         ev.target.className = 'chosen';
@@ -95,6 +100,9 @@ key_pad.addEventListener('click', (ev)=> {
         let letterFound = checkLetter(key); 
         if(letterFound === null){
             missed++;
+            let lives = document.querySelectorAll('.tries')[life];
+            lives.querySelector('img').src ="images/lostHeart.png";
+            life--;
         }
         checkWin(); 
     }   
